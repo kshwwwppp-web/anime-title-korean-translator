@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anime Title Korean Translator</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      width: 520px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background: #f6f8fa;
+      color: #24292f;
+      font-size: 13px;
+    }
+    h1 { margin: 0; font-size: 18px; }
+    h2 { margin: 0; font-size: 14px; }
+    .header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .subtle { color:#6e7781; font-size:12px; line-height:1.45; }
+    .card {
+      background:#fff;
+      border:1px solid #d8dee4;
+      border-radius:10px;
+      padding:14px;
+      margin-bottom:12px;
+    }
+    .card-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px; }
+    .toggle-wrap { display:flex; align-items:center; gap:9px; font-weight:600; }
+    .switch { position:relative; width:42px; height:24px; flex:none; }
+    .switch input { opacity:0; width:0; height:0; }
+    .slider {
+      position:absolute; inset:0; cursor:pointer; background:#afb8c1;
+      border-radius:999px; transition:.18s;
+    }
+    .slider::before {
+      content:""; position:absolute; width:18px; height:18px; left:3px; top:3px;
+      background:#fff; border-radius:50%; box-shadow:0 1px 2px rgba(0,0,0,.18); transition:.18s;
+    }
+    .switch input:checked + .slider { background:#2da44e; }
+    .switch input:checked + .slider::before { transform:translateX(18px); }
+
+    .tabs {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      background:#eaeef2;
+      border:1px solid #d0d7de;
+      border-radius:9px;
+      padding:3px;
+      margin-bottom:12px;
+      gap:3px;
+    }
+    .tab-btn {
+      border:0;
+      background:transparent;
+      color:#57606a;
+      border-radius:6px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-size:13px;
+      font-weight:700;
+    }
+    .tab-btn:hover { background:rgba(255,255,255,.55); }
+    .tab-btn.active {
+      background:#fff;
+      color:#0969da;
+      box-shadow:0 1px 2px rgba(27,31,36,.08);
+    }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    .site-toolbar, .rule-toolbar { display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin:8px 0; }
+    button {
+      border:1px solid #d0d7de; background:#f6f8fa; color:#24292f;
+      border-radius:6px; padding:6px 9px; cursor:pointer; font-size:12px; font-weight:600;
+    }
+    button:hover:not(:disabled) { background:#eef1f4; }
+    button.danger { color:#cf222e; }
+    button.primary { background:#0969da; color:#fff; border-color:#0969da; }
+    button.primary:hover:not(:disabled) { background:#075bbb; }
+    button:disabled { opacity:.45; cursor:default; }
+
+    .site-list { display:flex; flex-direction:column; gap:6px; max-height:235px; overflow:auto; }
+    .site-row { display:grid; grid-template-columns:22px 1fr 32px; gap:6px; align-items:center; }
+    .site-row input[type="text"], .add-site-input, .rule-row input {
+      width:100%; border:1px solid #d0d7de; border-radius:6px; padding:7px 9px; font-size:13px; background:#fff;
+    }
+    .site-row input[type="text"]:focus, .add-site-input:focus, .rule-row input:focus {
+      outline:none; border-color:#0969da; box-shadow:0 0 0 2px rgba(9,105,218,.12);
+    }
+    .icon-btn { padding:5px 7px; font-size:13px; }
+    .add-site { display:grid; grid-template-columns:1fr auto; gap:6px; margin-top:8px; }
+    .pattern-preview { margin-top:6px; color:#6e7781; font-size:11px; }
+
+    .rule-list { display:flex; flex-direction:column; gap:6px; max-height:285px; overflow:auto; }
+    .rule-row { display:grid; grid-template-columns:1fr 1fr 32px; gap:6px; align-items:center; }
+
+    .footer { position:sticky; bottom:0; background:#f6f8fa; padding-top:4px; }
+    #saveBtn { width:100%; padding:9px; font-size:13px; }
+    #statusMsg { min-height:18px; margin-top:6px; text-align:center; font-size:12px; color:#1a7f37; }
+    #statusMsg.error { color:#cf222e; }
+    .empty { padding:8px; text-align:center; color:#8c959f; border:1px dashed #d8dee4; border-radius:6px; }
+    .privacy-note { background:#fff8c5; border:1px solid #d4a72c; border-radius:9px; padding:10px 12px; margin-bottom:12px; color:#4d3b00; font-size:12px; line-height:1.5; }
+    .privacy-actions { display:flex; gap:7px; margin-top:8px; flex-wrap:wrap; }
+    .privacy-actions a { color:#0969da; text-decoration:none; font-weight:700; }
+    .privacy-actions a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>Anime Title Korean Translator</h1>
+      <div class="subtle">허용한 사이트에서 수동 치환을 우선 적용하고, 매칭되지 않으면 애니 제목을 한국어로 찾습니다.</div>
+    </div>
+  </div>
+
+  <div class="privacy-note">
+    <strong>개인정보 안내</strong><br>
+    자동 번역을 켜면 페이지에서 감지한 <strong>제목 문자열만</strong> 작품 식별/번역을 위해 AniList, Wikipedia, Google 번역 관련 서비스로 전송될 수 있습니다. 계정·쿠키·페이지 전체 내용은 개발자 서버로 수집하지 않습니다.
+    <div class="privacy-actions">
+      <a href="privacy-policy.html" target="_blank" rel="noopener">개인정보 처리방침 보기</a>
+      <button type="button" id="clearCacheBtn">번역 캐시 삭제</button>
+    </div>
+  </div>
+
+  <section class="card">
+    <div class="card-head" style="margin-bottom:0">
+      <div>
+        <h2>전체 기능 활성화</h2>
+        <div class="subtle">토글 변경은 저장 버튼과 관계없이 즉시 적용됩니다.</div>
+      </div>
+      <label class="toggle-wrap">
+        <span id="enabledText">켜짐</span>
+        <span class="switch">
+          <input type="checkbox" id="enabled">
+          <span class="slider"></span>
+        </span>
+      </label>
+    </div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="설정 항목">
+    <button type="button" class="tab-btn active" data-tab="sites" role="tab" aria-selected="true">적용 사이트</button>
+    <button type="button" class="tab-btn" data-tab="rules" role="tab" aria-selected="false">치환 단어</button>
+  </div>
+
+  <section id="sitesPanel" class="card tab-panel active" data-panel="sites" role="tabpanel">
+    <div class="card-head">
+      <div>
+        <h2>적용 사이트</h2>
+        <div class="subtle">자동 번역과 수동 치환이 함께 동작할 HTTPS 사이트입니다. 사용자가 추가한 사이트에만 접근 권한을 요청합니다.</div>
+      </div>
+    </div>
+
+    <div class="site-toolbar">
+      <button type="button" id="selectAllSitesBtn">전체 선택</button>
+      <button type="button" id="deleteSelectedSitesBtn" class="danger">선택 삭제</button>
+      <button type="button" id="deleteAllSitesBtn" class="danger">전체 삭제</button>
+    </div>
+
+    <div id="sitesList" class="site-list"></div>
+
+    <div class="add-site">
+      <input id="siteInput" class="add-site-input" type="text" placeholder="예: anime.example.com">
+      <button type="button" id="addSiteBtn">+ 사이트 추가</button>
+    </div>
+    <div class="pattern-preview">내부 적용 예: <code>anime.example.com</code> → <code>https://*.anime.example.com/*</code></div>
+  </section>
+
+  <section id="rulesPanel" class="card tab-panel" data-panel="rules" role="tabpanel">
+    <div class="card-head">
+      <div>
+        <h2>치환 단어</h2>
+        <div class="subtle">원문에 포함된 문자열이 일치하면 자동 번역보다 먼저 지정한 한글을 표시합니다.</div>
+      </div>
+    </div>
+
+    <div id="rulesContainer" class="rule-list"></div>
+    <div class="rule-toolbar">
+      <button type="button" id="addRuleBtn">+ 단어 추가</button>
+      <button type="button" id="clearRulesBtn" class="danger">전체 삭제</button>
+    </div>
+  </section>
+
+  <div class="footer">
+    <button type="button" id="saveBtn" class="primary" disabled>변경사항 저장</button>
+    <div id="statusMsg"></div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

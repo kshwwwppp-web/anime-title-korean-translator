@@ -1,0 +1,9 @@
+Official Chrome Web Store references checked for this release preparation:
+- https://developer.chrome.com/docs/webstore/program-policies/policies
+- https://developer.chrome.com/docs/webstore/user_data
+- https://developer.chrome.com/docs/webstore/program-policies/listing-requirements
+- https://developer.chrome.com/docs/webstore/cws-dashboard-privacy
+- https://developer.chrome.com/docs/webstore/prepare
+- https://developer.chrome.com/docs/webstore/cws-dashboard-distribution/
+
+Review approval is not guaranteed; Google makes the final decision during review.

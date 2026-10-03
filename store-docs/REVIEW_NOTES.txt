@@ -1,0 +1,21 @@
+Chrome Web Store Reviewer Notes - Anime Title Korean Translator v6.0
+
+Single purpose:
+The extension displays Korean equivalents for anime/media title text on HTTPS websites explicitly selected by the user. Manual replacement rules take priority over automatic lookup.
+
+How to test:
+1. Install the extension and open the action popup.
+2. Add an HTTPS domain that contains anime/media title links and approve the requested site permission.
+3. Save the settings and turn on the master toggle.
+4. Open/reload or keep an already-open matching page. Korean title badges are inserted before detected title elements.
+5. Add a manual replacement rule. It will be applied before any network lookup.
+6. Turn the master toggle off. Existing badges are removed immediately.
+
+Permissions:
+- storage: settings and translation cache.
+- scripting: inject/update the content script only on user-approved sites.
+- optional https://*/* host permission: enables a user to add arbitrary HTTPS sites; permission is requested per configured domain at runtime, not granted globally at installation.
+- Fixed API hosts: AniList, Wikipedia, Google Input Tools and Google Translate are used for title identification/translation.
+
+Data handling:
+Only detected title strings may be sent to the external services above for the user-facing translation feature. No developer-operated backend is used. Settings are stored with chrome.storage.sync and translation cache with chrome.storage.local.
