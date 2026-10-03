@@ -49,7 +49,23 @@ anime-title-korean-translator/
 
 ---
 
-## 🚀 로컬 개발 및 설치 방법
+## 📦 다운로드 및 간편 설치 방법 (무료 배포)
+
+Chrome Web Store를 거치지 않고 누구나 무료로 다운로드하여 1분 안에 설치할 수 있습니다:
+
+[![Download Latest Release](https://img.shields.io/badge/Download-Latest%20v6.0.0%20ZIP-orange?style=for-the-badge&logo=github)](https://github.com/kshwwwppp-web/anime-title-korean-translator/releases/latest)
+
+1. [최신 릴리즈(v6.0.0)](https://github.com/kshwwwppp-web/anime-title-korean-translator/releases/download/v6.0.0/anime-title-korean-translator-v6.0.0.zip)에서 **`anime-title-korean-translator-v6.0.0.zip`** 파일을 다운로드합니다.
+2. 다운로드한 ZIP 파일의 압축을 원하는 폴더에 풉니다.
+3. Chrome 주소창에 `chrome://extensions` 를 입력하여 확장 프로그램 관리 페이지로 이동합니다.
+4. 우측 상단의 **‘개발자 모드(Developer mode)’** 토글 스위치를 켭니다.
+5. 좌측 상단의 **‘압축해제된 확장 프로그램을 로드합니다(Load unpacked)’** 버튼을 클릭합니다.
+6. **2번에서 압축을 푼 폴더를 선택**하면 즉시 설치가 완료됩니다!
+7. 툴바 상단의 퍼즐 아이콘(확장 프로그램)에서 고정(Pin)한 뒤 클릭하여 기능을 켜고 적용할 사이트를 등록하세요.
+
+---
+
+## 🛠️ 개발자용 로컬 소스코드 설치 방법
 
 1. 저장소를 클론합니다:
    ```bash
@@ -57,9 +73,8 @@ anime-title-korean-translator/
    ```
 2. Chrome 브라우저에서 `chrome://extensions`로 이동합니다.
 3. 우측 상단의 **개발자 모드(Developer mode)**를 활성화합니다.
-4. 좌측 상단의 **압축해제된 확장 프로그램을 로드합니다(Load unpacked)**를 클릭합니다.
+4. 좌측 상단의 **압축해제된 확장 프로그램을 로드합니다**를 클릭합니다.
 5. 이 저장소 내의 `extension` 폴더를 선택합니다.
-6. 툴바의 확장 프로그램 아이콘을 클릭하여 기능을 켜고, 적용할 사이트(예: HTTPS 도메인)를 등록합니다.
 
 ---
 
